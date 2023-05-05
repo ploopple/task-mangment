@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters; 
 using System.Text.Json.Serialization;
+using src.Services.UserServices;
 // using DotNetEnv;
 
 // DotNetEnv.Env.Load();
@@ -32,6 +33,7 @@ builder.Services.AddDbContext<DataContext>(options => {
     // options.UseNpgsql(builder.Configuration.GetConnectionString("WebApiDatabase"));
     options.UseNpgsql(builder.Configuration.GetConnectionString("db"));
 });
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddAuthentication().AddJwtBearer(option => {
     option.TokenValidationParameters = new TokenValidationParameters {
         ValidateIssuer = false,

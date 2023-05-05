@@ -5,13 +5,13 @@ using src.Models.ProjectModel;
 namespace src.Models.UserModel;
 
 public class User {
-    [Key]
+    // [Key]
     public int Id { get; set; }
-    [Required]
+    // [Required]
     public string? Username { get; set; }
-    [Required]
+    // [Required]
     public string? Email { get; set; }
-    [Required]
+    // [Required]
     public string? Password { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
