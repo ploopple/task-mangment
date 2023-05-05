@@ -8,6 +8,7 @@ using System.Text.Json.Serialization;
 using src.Services.UserServices;
 using src.Services.ProjectServices;
 using src.Services.TodoServices;
+using src.Services.CommentServices;
 // using DotNetEnv;
 
 // DotNetEnv.Env.Load();
@@ -39,6 +40,7 @@ builder.Services.AddDbContext<DataContext>(options => {
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<ITodoService, TodoService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 
 builder.Services.AddAuthentication().AddJwtBearer(option => {
     option.TokenValidationParameters = new TokenValidationParameters {
