@@ -124,5 +124,26 @@ public class ProjectService : IProjectService
         res.Data = allProjectTodos.OrderBy(t => t.index);
         return res;
     }
+
+	public Res<string> deletePorject(int userId, int projectId)
+    {
+
+        Res<string> res = new();
+        if (_context.Users?.Find(userId) == null)
+        {
+            res.Err = "User does not exist";
+            return res;
+        }
+        Project project = _context.Projects?.Find(projectId)!;
+        if ( project == null)
+        {
+            res.Err = "Project does not exist";
+            return res;
+        }
+
+        _context.Projects!.Remove(project);
+        _context.SaveChanges();
+        return res;
+    }
 }
 

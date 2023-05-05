@@ -1,4 +1,4 @@
-<div class="container mx-auto py-6">
+<!-- <div class="container mx-auto py-6">
     <h1 class="text-2xl font-bold mb-4">Your Projects</h1>
     <div class=" mb-4">
         <input type="text"
@@ -18,12 +18,32 @@
             <button (click)="localStorage.setItem('project', jsonToString(proj))" [routerLink]="['/project', proj.id]"  class="bg-blue-500 hover:bg-blue-600 rounded-md text-white font-bold py-2 px-4">View Tasks</button>
         </div>
     </div>
-    <!-- <ng-template #noProj>
-        <div *ngIf="isLoading">Loadin..</div>
-        <div *ngIf="!isLoading">
-            <p class="text-center text-gray-600 text-sm mt-4">No projects found. Create a new one!</p>
+</div> -->
+<div class="container mx-auto py-6">
+    <h1 class="text-2xl font-bold mb-4">Your Projects</h1>
+    <div class=" mb-4">
+        <input type="text"
+            class="rounded-l-lg py-2 px-3 border-t border-b border-l text-gray-800 border-gray-200 bg-white mb-2 md:mb-0"
+            placeholder="Add a new project..." [(ngModel)]="newProjectName">
+        <button *ngIf="!isAddNewProjectLoading" (click)="handleOnAddProject()"
+            class="  rounded-r-lg text-white font-bold py-2 px-4" [disabled]="!newProjectName"
+            [ngClass]="{'hover:bg-blue-600': newProjectName,'bg-blue-500': newProjectName,'bg-blue-200': !newProjectName,'cursor-not-allowed': !newProjectName}">Add</button>
+        <button *ngIf="isAddNewProjectLoading" class="bg-blue-200 rounded-r-lg text-white font-bold py-2 px-4"
+            [disabled]=true>wait</button>
+    </div>
+    <div class="" *ngIf="!projects.length">
+        <p>You don't have any project.</p>
+    </div>
+    <div class="border" *ngIf="projects.length">
+        <div *ngFor="let proj of projects" class="border m-4 flex justify-between">
+            <h3 
+                (click)="localStorage.setItem('project', jsonToString(proj))"
+                 [routerLink]="['/project', proj.id]"
+                class="font-bold py-2 px-4 cursor-pointer">
+                {{proj.name}}</h3>
+                <button (click)="handleOnClickDelete(proj.id)" class="text-red-400  px-2 rounded-lg text-sm">Delete</button>
         </div>
-    </ng-template> -->
+    </div>
 </div>
 
 <app-loading *ngIf="isLoading"></app-loading>

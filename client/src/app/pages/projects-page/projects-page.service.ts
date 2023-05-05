@@ -16,7 +16,9 @@ export class ProjectsPageService {
     return this.http.get('http://localhost:5242/api/Project/getAllUserProjects', {headers:this.headers})
   }
   handleOnAddNewProject(userId: string,name: string) {
-    // //console.log(`http://localhost:5242/api/Project?id=${this.userData.user.id}&name=${name}`)
     return this.http.post('http://localhost:5242/api/Project', {name}, {headers:this.headers, responseType: "json"})
+  }
+  handleOnDeleteProject(projectId: string) {
+    return this.http.delete('http://localhost:5242/api/Project/' + projectId, {headers:this.headers})
   }
 }

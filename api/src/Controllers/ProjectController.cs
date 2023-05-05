@@ -51,4 +51,11 @@ public class ProjectController : ControllerBase
         Res<IQueryable<Todo>> response = _projectService.getAllProjectsTodos(userId,projectId);
         return response.Err == null ? response : BadRequest(response);
     }
+    [HttpDelete("{projectId}")]
+    public ActionResult<Res<string>> DeleteProject(int projectId)
+    {
+        int userId = int.Parse(User.Identity?.Name!);
+        Res<string> response = _projectService.deletePorject(userId,projectId);
+        return response.Err == null ? response : BadRequest(response);
+    }
 }
