@@ -95,5 +95,38 @@ public class UserControllerTest
         Assert.NotNull(result.Err);
         Assert.Equal("The username and/or password you specified are not correct.", result.Err);
     }
+    [Fact]
+    public void GetUserInfo_WithToken_ReturnResUser()
+    {
+        // Arrange
+        UserDto req = new UserDto {  Email = "king@mail.com", Password = "king123" };
+        Res<User> res = new();
+        res.Data = new User { Id = 1, Username = req.Username, Email = req.Email, Password = req.Password};
+        A.CallTo(() => _userService.userInfo(1)).Returns(res);
+
+        // Act
+        var result = _userService.userInfo(1);
+
+        // Assert
+        Assert.Null(result.Err);
+        Assert.NotNull(result.Data);
+        Assert.Equal(res.Data, result.Data);
+    }
+    [Fact]
+    public void GetUserInfo_WithoutToken_ReturnResErr()
+    {
+        // Arrange
+        UserDto req = new UserDto {  Email = "king@mail.com", Password = "king123" };
+        Res<User> res = new() { Err = "user does not exsist"};
+        A.CallTo(() => _userService.userInfo(999)).Returns(res);
+
+        // Act
+        var result = _userService.userInfo(999);
+
+        // Assert
+        Assert.Null(result.Data);
+        Assert.NotNull(result.Err);
+        Assert.Equal(res.Err, result.Err);
+    }
 
 }
