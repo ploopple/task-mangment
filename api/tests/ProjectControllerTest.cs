@@ -63,4 +63,64 @@ public class ProjectControllerTest
         Assert.NotNull(result.Err);
         Assert.Equal("Project already exist", result.Err);
     }
+    [Fact]
+    public void AddUserToProject_WithValidProjectName_ReturnResString()
+    {
+        // Arrange
+        Res<string> res = new() { Data = "Done" };
+        A.CallTo(() => _projectService.addUserToProject(1,1, "random@gmail.com")).Returns(res);
+
+        // Act
+        var result = _projectService.addUserToProject(1,1 ,"random@gmail.com");
+
+        // Assert
+        Assert.Null(result.Err);
+        Assert.NotNull(result.Data);
+        Assert.Equal("Done", result.Data);
+    }
+    [Fact]
+    public void AddUserToProject_WithNotValidUserId_ReturnResStringErr()
+    {
+        // Arrange
+        Res<string> res = new() { Err = "User Does not exist" };
+        A.CallTo(() => _projectService.addUserToProject(9,1, "random@gmail.com")).Returns(res);
+
+        // Act
+        var result = _projectService.addUserToProject(9,1 ,"random@gmail.com");
+
+        // Assert
+        Assert.Null(result.Data);
+        Assert.NotNull(result.Err);
+        Assert.Equal(res, result);
+    }
+    [Fact]
+    public void AddUserToProject_WithNotValidProjectId_ReturnResStringErr()
+    {
+        // Arrange
+        Res<string> res = new() { Err = "project Does not exist" };
+        A.CallTo(() => _projectService.addUserToProject(1,999, "random@gmail.com")).Returns(res);
+
+        // Act
+        var result = _projectService.addUserToProject(1,999 ,"random@gmail.com");
+
+        // Assert
+        Assert.Null(result.Data);
+        Assert.NotNull(result.Err);
+        Assert.Equal("project Does not exist", result.Err);
+    }
+    [Fact]
+    public void AddUserToProject_WithNotValidEmail_ReturnResStringErr()
+    {
+        // Arrange
+        Res<string> res = new() { Err = "the shared user Does not exist" };
+        A.CallTo(() => _projectService.addUserToProject(1,1, "void@gmail.com")).Returns(res);
+
+        // Act
+        var result = _projectService.addUserToProject(1,1 ,"void@gmail.com");
+
+        // Assert
+        Assert.Null(result.Data);
+        Assert.NotNull(result.Err);
+        Assert.Equal("the shared user Does not exist", result.Err);
+    }
 }
