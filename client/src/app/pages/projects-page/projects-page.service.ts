@@ -21,4 +21,7 @@ export class ProjectsPageService {
   handleOnDeleteProject(projectId: string) {
     return this.http.delete('http://localhost:5242/api/Project/' + projectId, {headers:this.headers})
   }
+  handleOnUpdateProject(projectId: string, newName: string) {
+    return this.http.patch('http://localhost:5242/api/Project?projectId='  + projectId, {name: newName}, {headers:this.headers})
+  }
 }

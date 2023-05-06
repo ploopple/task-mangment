@@ -14,6 +14,9 @@ export class ProjectsPageComponent {
   projects: any[] = []
   newProjectName = ""
   localStorage = localStorage
+  updatedName=""
+  isUpdateingProjectName = false
+  selectedProjectId = ""
 
   errMsg = ""
   constructor(private projectsPageService: ProjectsPageService, private store: GlobalVariblesService) {
@@ -70,5 +73,25 @@ export class ProjectsPageComponent {
         this.store.setErrMsg(err.error.error)
         this.isLoading = false
       })
+  }
+handleOnClickUpdate() {
+  if(this.updatedName) {
+
+    this.isLoading = true
+        const i = this.projects.findIndex(p => p.id === this.selectedProjectId)
+        this.projects[i].name =  this.updatedName
+        // this.projects.splice(i ,1)
+    this.projectsPageService.handleOnUpdateProject(this.selectedProjectId, this.updatedName)
+      .subscribe((res: any) => {
+        this.isUpdateingProjectName = false
+        this.updatedName = ""
+        this.isLoading = false
+      }, (err: any) => {
+        this.store.setErrMsg(err.error.error)
+        this.isUpdateingProjectName = false
+        this.updatedName = ""
+        this.isLoading = false
+      })
+  }
   }
 }

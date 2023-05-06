@@ -145,5 +145,26 @@ public class ProjectService : IProjectService
         _context.SaveChanges();
         return res;
     }
+
+    public Res<Project> updateProject(int userId, int projectId, ProjectDto req)
+    {
+        Res<Project> res = new();
+        if (_context.Users?.Find(userId) == null)
+        {
+            res.Err = "User does not exist";
+            return res;
+        }
+        Project project = _context.Projects?.Find(projectId)!;
+        if (project == null)
+        {
+            res.Err = "Project does not exist";
+            return res;
+        }
+        project.Name = req.Name;
+        _context.Projects!.Update(project);
+        _context.SaveChanges();
+        return res;
+    }
+
 }
 

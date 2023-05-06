@@ -12,5 +12,6 @@ namespace src.Services.ProjectServices
 		Res<string> deletePorject(int userId, int projectId);
 		Res<IQueryable<Project>> getAllUserProjects(int userId);
 		Res<IQueryable<Todo>> getAllProjectsTodos(int userId, int projectId);
+		Res<Project> updateProject(int userId, int projectId, ProjectDto req);
 	}
 }

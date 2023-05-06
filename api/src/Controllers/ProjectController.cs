@@ -58,4 +58,12 @@ public class ProjectController : ControllerBase
         Res<string> response = _projectService.deletePorject(userId,projectId);
         return response.Err == null ? response : BadRequest(response);
     }
+
+    [HttpPatch()]
+    public ActionResult<Res<Project>> UpdateProject(int projectId, ProjectDto req)
+    {
+        int userId = int.Parse(User.Identity?.Name!);
+        Res<Project> response = _projectService.updateProject(userId, projectId, req);
+        return response.Err == null ? response : BadRequest(response);
+    }
 }
