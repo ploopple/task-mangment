@@ -1,70 +1,40 @@
-using src.Helpers;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Xunit;
 using src.Controllers;
 using src.Models.UserModel;
-using Microsoft.EntityFrameworkCore.InMemory;
-using System.Linq;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text.Json;
-using System.Text;
-using Newtonsoft.Json;
-using DotNetEnv;
-public class ApiResponse<T>
+using src.Services.UserServices;
+using FakeItEasy;
+using src.Models.ResModel;
+
+
+namespace tests.UserControllerTests
 {
-    public T? Data { get; set; }
-    public string Error { get; set; } = "";
-}
 
-
-namespace tests.UserControllerTests{
-
-public class UserControllerTest 
-{
-    private readonly HttpClient _client;
-    private static string token = "";
-
+    public class UserControllerTest
+    {
+        public readonly IUserService _userService;
+        public readonly UserController _controller;
         public UserControllerTest()
         {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:5242"); // replace with your API's base URL
+            _userService = A.Fake<IUserService>();
+            _controller = new UserController(_userService);
         }
 
-        [Fact(DisplayName = "Create new user")]
-        public async void CreateNewUser()
+
+        [Fact]
+        public void SignUP_WithValidUser_ReturnResString()
         {
 
-            Env.Load();
-            Console.WriteLine(Environment.GetEnvironmentVariable("TESTCODE"));
-            UserDto user = new UserDto { Username = "111", Email = "qqssqssqq", Password = "pass1" };
-            var content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-            // var token = "my-auth-token";
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            var response = await _client.PostAsync("/api/User", content);
-            response.EnsureSuccessStatusCode();
-            var responseContent = await response.Content.ReadAsStringAsync();
-            var  responseContentJson = JsonConvert.DeserializeObject<ApiResponse<string>>(responseContent) ;
-            token = responseContentJson.Data! ;
-            Console.WriteLine(responseContentJson.Data);
-            Console.WriteLine(responseContentJson.Error);
+            // Arrange
+            Res<string> res = new () {Data = "Token"};
+            UserDto req = new UserDto { Username = "King", Email = "king@mail.com", Password = "king123" };
+            A.CallTo(() => _userService.signUp(req)).Returns(res);
+
+            // Act
+            var result = _controller.SignUp(req);
+
+            // Assert
+            Assert.Equal(res, result.Value);
+
         }
-    // [Fact]
-        public async void DeleteUser()
-        {
-            Console.WriteLine(token);
-            // // var body = new { };
-            // // var content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            var response = await _client.DeleteAsync("/api/User");
-            response.EnsureSuccessStatusCode();
-            var responseContent = await response.Content.ReadAsStringAsync();
-            ApiResponse<string> responseContentJson = JsonConvert.DeserializeObject<ApiResponse<string>>(responseContent);
-            Console.WriteLine(responseContent);
-        }
-}
+
+    }
 }

@@ -23,14 +23,14 @@ public class UserController : ControllerBase {
         return response.Err == null ? response : BadRequest(response); 
     }
     [HttpPost]
-    public ActionResult<Res<string>> Post(UserDto req)
+    public ActionResult<Res<string>> SignUp(UserDto req)
     {
         Res<string> response = _userService.signUp(req);
         return response.Err == null ? response : BadRequest(response); 
     }
 
     [HttpPost("login")]
-    public ActionResult<Res<string>> post(UserDto req) {
+    public ActionResult<Res<string>> Login(UserDto req) {
         Res<string> response = _userService.login(req);
         return response.Err == null ? response : BadRequest(response); 
     }
