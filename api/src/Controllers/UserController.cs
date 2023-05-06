@@ -26,13 +26,13 @@ public class UserController : ControllerBase {
     public ActionResult<Res<string>> SignUp(UserDto req)
     {
         Res<string> response = _userService.signUp(req);
-        return response.Err == null ? response : BadRequest(response); 
+        return response.Err == null ? response : new BadRequestObjectResult(response); 
     }
 
     [HttpPost("login")]
     public ActionResult<Res<string>> Login(UserDto req) {
         Res<string> response = _userService.login(req);
-        return response.Err == null ? response : BadRequest(response); 
+        return response.Err == null ? response : new BadRequestObjectResult(response); 
     }
 
 }

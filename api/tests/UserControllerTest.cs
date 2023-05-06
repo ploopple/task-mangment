@@ -3,7 +3,7 @@ using src.Models.UserModel;
 using src.Services.UserServices;
 using FakeItEasy;
 using src.Models.ResModel;
-
+using Microsoft.AspNetCore.Mvc;
 
 namespace tests.UserControllerTests
 {
@@ -11,11 +11,9 @@ namespace tests.UserControllerTests
     public class UserControllerTest
     {
         public readonly IUserService _userService;
-        public readonly UserController _controller;
         public UserControllerTest()
         {
             _userService = A.Fake<IUserService>();
-            _controller = new UserController(_userService);
         }
 
 
@@ -29,10 +27,32 @@ namespace tests.UserControllerTests
             A.CallTo(() => _userService.signUp(req)).Returns(res);
 
             // Act
-            var result = _controller.SignUp(req);
+            var result = _userService.signUp(req);
 
             // Assert
-            Assert.Equal(res, result.Value);
+            Assert.Null(result.Err);
+            Assert.NotNull(result.Data);
+            Assert.Equal("Token", result.Data);
+
+
+        }
+
+        [Fact]
+        public void SignUP_WithNotValidUser_ReturnResStringErr()
+        {
+
+            // Arrange
+            Res<string> res = new() { Err = "Email already exist" };
+            UserDto req = new UserDto { Username = "King", Email = "king@mail.com", Password = "king123" };
+            A.CallTo(() => _userService.signUp(req)).Returns(res);
+
+            // Act
+            var result = _userService.signUp(req);
+
+            // Assert
+            Assert.Null(result.Data);
+            Assert.NotNull(result.Err);
+            Assert.Equal( "Email already exist", result.Err);
 
         }
 
