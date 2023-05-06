@@ -54,7 +54,7 @@ public class UserService: IUserService
             return response;
         }
 
-        response.Err = "Email already exist.";
+        response.Err = "user already exist.";
         return response;
     }
 
