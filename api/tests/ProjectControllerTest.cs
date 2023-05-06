@@ -123,4 +123,49 @@ public class ProjectControllerTest
         Assert.NotNull(result.Err);
         Assert.Equal("the shared user Does not exist", result.Err);
     }
+    [Fact]
+    public void DeleteProject_WithValidProjectAndUserId_ReturnResString()
+    {
+        // Arrange
+        Res<string> res = new() { Data = "Done" };
+        A.CallTo(() => _projectService.deletePorject(1,1)).Returns(res);
+
+        // Act
+        var result = _projectService.deletePorject(1,1);
+
+        // Assert
+        Assert.Null(result.Err);
+        Assert.NotNull(result.Data);
+        Assert.Equal(res.Data, result.Data);
+    }
+    [Fact]
+    public void DeleteProject_WithNotValidUserId_ReturnResStringErr()
+    {
+        // Arrange
+        Res<string> res = new() { Err = "user Does not exist" };
+        A.CallTo(() => _projectService.deletePorject(9,1)).Returns(res);
+
+        // Act
+        var result = _projectService.deletePorject(9,1);
+
+        // Assert
+        Assert.Null(result.Data);
+        Assert.NotNull(result.Err);
+        Assert.Equal("user Does not exist", result.Err);
+    }
+    [Fact]
+    public void DeleteProject_WithNotProjectId_ReturnResStringErr()
+    {
+        // Arrange
+        Res<string> res = new() { Err = "project Does not exist" };
+        A.CallTo(() => _projectService.deletePorject(1,9)).Returns(res);
+
+        // Act
+        var result = _projectService.deletePorject(1,9);
+
+        // Assert
+        Assert.Null(result.Data);
+        Assert.NotNull(result.Err);
+        Assert.Equal("project Does not exist", result.Err);
+    }
 }
