@@ -4,7 +4,7 @@ using FakeItEasy;
 using src.Models.ResModel;
 using src.Models.ProjectModel;
 
-namespace tests.UserControllerTests;
+namespace tests.ProjectControllerTests;
 
 public class ProjectControllerTest
 {
