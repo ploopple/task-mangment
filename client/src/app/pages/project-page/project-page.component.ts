@@ -38,8 +38,8 @@ export class ProjectPageComponent {
   allInPrograceColTodos: any[] = []
   allDoneColTodos: any[] = []
   newShareProjectEmail = ""
-
   errMsg = ""
+
   constructor(private route: ActivatedRoute, private cd: ChangeDetectorRef, private projectPageService: ProjectPageService, private store: GlobalVariblesService) {
 this.store.getErrMsg().subscribe((value) => {
       this.errMsg = value

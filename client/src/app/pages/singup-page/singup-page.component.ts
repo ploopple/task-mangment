@@ -8,7 +8,6 @@ import { GlobalVariblesService } from 'src/app/store/global-varibles.service';
 @Component({
   selector: 'app-singup-page',
   templateUrl: './singup-page.component.html',
-  styleUrls: ['./singup-page.component.css']
 })
 export class SingupPageComponent {
   emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

@@ -1,5 +1,5 @@
-import {  ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateFn, UrlTree, Router } from '@angular/router';
-import { Injectable, inject } from '@angular/core';
+import {  ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateFn,  Router } from '@angular/router';
+import {  inject } from '@angular/core';
 import { AuthService } from './auth.service';
 
 export const AuthGuard: CanActivateFn = (
@@ -23,8 +23,6 @@ export const AuthNotGuard: CanActivateFn = (
   const router = inject(Router);
 
   if(authService.isLoggedIn()) {
-    //console.log(route.url )
-    // if(route.url === "/login")
     router.navigate(['projects'])
     return false
   }

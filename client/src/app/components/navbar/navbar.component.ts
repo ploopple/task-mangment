@@ -5,7 +5,6 @@ import { GlobalVariblesService } from 'src/app/store/global-varibles.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent  {
   isLoggedIn: boolean = false
