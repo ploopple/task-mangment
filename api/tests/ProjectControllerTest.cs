@@ -168,4 +168,22 @@ public class ProjectControllerTest
         Assert.NotNull(result.Err);
         Assert.Equal("project Does not exist", result.Err);
     }
+    [Fact]
+    public void GetAllUserProjects_WithUserId_ReturnResListOfProjects()
+    {
+        // Arrange
+        // Res<List<Project>> res = new() { Data = ] } ;
+        // Res<List<Project>> res = new Res<List<Project>>(){ Data = new List<Project>{new Project()}} as Res<List<Project>>;
+        var d =(List<Project>) new List<Project>() {new Project {Id = 1, Name = "proj 1"}, new Project {Id= 2,Name = "proj 2"}};
+        Res<List<Project>> res = new () {Data = d};
+        A.CallTo(() => _projectService.getAllUserProjects(1)).Returns(res);
+
+        // Act
+        var result = _projectService.getAllUserProjects(1);
+
+        // Assert
+        Assert.Null(result.Err);
+        Assert.NotNull(result.Data);
+        Assert.Equal(d, result.Data);
+    }
 }

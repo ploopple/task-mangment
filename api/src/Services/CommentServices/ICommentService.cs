@@ -6,7 +6,7 @@ namespace src.Services.CommentServices
 {
 	public interface ICommentService
 	{
-		Res<IQueryable<Comment>> getAllTodoComments(int todoId);
+		Res<List<Comment>> getAllTodoComments(int todoId);
 		Res<Comment> addNewTodo(int userId, CommentDto req);
 	}
 }

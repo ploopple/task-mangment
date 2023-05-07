@@ -28,8 +28,8 @@ public class CommentController : ControllerBase {
     }
 
     [HttpGet]
-    public ActionResult<Res<IQueryable<Comment>>> GetAllCommentsTodo(int todoId) {
-        Res<IQueryable<Comment>> response = _commentService.getAllTodoComments(todoId);
+    public ActionResult<Res<List<Comment>>> GetAllCommentsTodo(int todoId) {
+        Res<List<Comment>> response = _commentService.getAllTodoComments(todoId);
         return response.Err == null ? response : BadRequest(response); 
     }
 }

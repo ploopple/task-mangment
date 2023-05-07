@@ -17,16 +17,16 @@ public class CommentService : ICommentService
         _config = config;
     }
 
-    public Res<IQueryable<Comment>> getAllTodoComments(int todoId)
+    public Res<List<Comment>> getAllTodoComments(int todoId)
     {
-        Res<IQueryable<Comment>> response = new();
+        Res<List<Comment>> response = new();
 Todo? Todo = _context.Todos?.Find(todoId);
         if (Todo == null)
         {
             response.Err = "Todo does not exisit";
             return response;
         } 
-        response.Data = _context.Comments?.Where(com => com.TodoId == todoId);
+        response.Data = _context.Comments?.Where(com => com.TodoId == todoId).ToList();
         return response;
     }
     public Res<Comment> addNewTodo(int userId, CommentDto req)

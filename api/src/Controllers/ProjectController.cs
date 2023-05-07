@@ -37,18 +37,18 @@ public class ProjectController : ControllerBase
 
 
     [HttpGet("getAllUserProjects")]
-    public ActionResult<Res<IQueryable<Project>>> getAllUserProjects()
+    public ActionResult<Res<List<Project>>> getAllUserProjects()
     {
         int userId = int.Parse(User.Identity?.Name!);
-        Res<IQueryable<Project>> response = _projectService.getAllUserProjects(userId);
+        Res<List<Project>> response = _projectService.getAllUserProjects(userId);
         return response.Err == null ? response : BadRequest(response);
     }
 
     [HttpGet("getAllProjecTodo")]
-    public ActionResult<Res<IQueryable<Todo>>> getAllProjecTodo(int projectId)
+    public ActionResult<Res<List<Todo>>> getAllProjecTodo(int projectId)
     {
         int userId = int.Parse(User.Identity?.Name!);
-        Res<IQueryable<Todo>> response = _projectService.getAllProjectsTodos(userId,projectId);
+        Res<List<Todo>> response = _projectService.getAllProjectsTodos(userId,projectId);
         return response.Err == null ? response : BadRequest(response);
     }
     [HttpDelete("{projectId}")]

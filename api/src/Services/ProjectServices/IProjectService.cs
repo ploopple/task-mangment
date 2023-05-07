@@ -10,8 +10,8 @@ namespace src.Services.ProjectServices
 		Res<Project> createNewProject(int userId, ProjectDto req);
 		Res<string> addUserToProject(int userId, int projectId, string userEmail);
 		Res<string> deletePorject(int userId, int projectId);
-		Res<IQueryable<Project>> getAllUserProjects(int userId);
-		Res<IQueryable<Todo>> getAllProjectsTodos(int userId, int projectId);
+		Res<List<Project>> getAllUserProjects(int userId);
+		Res<List<Todo>> getAllProjectsTodos(int userId, int projectId);
 		Res<Project> updateProject(int userId, int projectId, ProjectDto req);
 	}
 }

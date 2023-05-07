@@ -95,33 +95,33 @@ public class ProjectService : IProjectService
     }
 
 
-    public Res<IQueryable<Project>> getAllUserProjects(int userId)
+    public Res<List<Project>> getAllUserProjects(int userId)
     {
 
 
-        Res<IQueryable<Project>> res = new();
+        Res<List<Project>> res = new();
         if (_context.Users?.Find(userId) == null)
         {
             res.Err = "User does not exist";
             return res;
         }
         User? user = _context.Users.Find(userId);
-        IQueryable<Project> allUserProjects = _context.Projects!.Where(p => p.ShareUsersId.Contains(userId));
+        List<Project> allUserProjects = _context.Projects!.Where(p => p.ShareUsersId.Contains(userId)).ToList();
         res.Data = allUserProjects;
         return res;
     }
 
-    public Res<IQueryable<Todo>> getAllProjectsTodos(int userId, int projectId)
+    public Res<List<Todo>> getAllProjectsTodos(int userId, int projectId)
     {
-        Res<IQueryable<Todo>> res = new();
+        Res<List<Todo>> res = new();
         if (_context.Users?.Find(userId) == null)
         {
             res.Err = "User does not exist";
             return res;
         }
 
-        IQueryable<Todo> allProjectTodos = _context.Todos!.Where(todo => todo.ProjectId == projectId);
-        res.Data = allProjectTodos.OrderBy(t => t.index);
+        List<Todo> allProjectTodos = _context.Todos!.Where(todo => todo.ProjectId == projectId).ToList();
+        res.Data = allProjectTodos.OrderBy(t => t.index).ToList();
         return res;
     }
 
