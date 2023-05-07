@@ -245,4 +245,53 @@ public class ProjectControllerTest
         Assert.NotNull(result.Err);
         Assert.Equal("Project does not exist", result.Err);
     }
+    [Fact]
+    public void UpdateProject_WithValidUserIdAndProjectId_ReturnResProject()
+    {
+        // Arrange
+        Project data = new () {Id = 1, Name = "proj 1"};
+        Res<Project> res = new () {Data = data};
+        ProjectDto req = new () {Name = "proj 1"};
+        A.CallTo(() => _projectService.updateProject(1, 1, req)).Returns(res);
+
+        // Act
+        var result = _projectService.updateProject(1,1, req);
+
+        // Assert
+        Assert.Null(result.Err);
+        Assert.NotNull(result.Data);
+        Assert.Equal(data, result.Data);
+    }
+    [Fact]
+    public void GetAllProjectTodos_WithValidUserId_ReturnResStringErr()
+    {
+        // Arrange
+        Res<Project> res = new () { Err = "User does not exist"};
+        ProjectDto req = new () {Name = "proj 1"};
+        A.CallTo(() => _projectService.updateProject(99,1, req)).Returns(res);
+
+        // Act
+        var result = _projectService.updateProject(99, 1, req);
+
+        // Assert
+        Assert.Null(result.Data);
+        Assert.NotNull(result.Err);
+        Assert.Equal("User does not exist", result.Err);
+    }
+    [Fact]
+    public void GetAllProjectTodos_WithValidProjectId_ReturnResStringErr()
+    {
+        // Arrange
+        Res<Project> res = new () { Err = "Project does not exist"};
+        ProjectDto req = new () {Name = "proj 1"};
+        A.CallTo(() => _projectService.updateProject(1,99, req)).Returns(res);
+
+        // Act
+        var result = _projectService.updateProject(1, 99, req);
+
+        // Assert
+        Assert.Null(result.Data);
+        Assert.NotNull(result.Err);
+        Assert.Equal("Project does not exist", result.Err);
+    }
 }
