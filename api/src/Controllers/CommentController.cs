@@ -23,7 +23,7 @@ public class CommentController : ControllerBase {
     public ActionResult<Res<Comment>> Post( CommentDto req)
     {
         int userId = int.Parse(User.Identity?.Name!);
-        Res<Comment> response = _commentService.addNewTodo(userId,req) ;
+        Res<Comment> response = _commentService.addNewComment(userId,req) ;
         return response.Err == null ? response : BadRequest(response); 
     }
 

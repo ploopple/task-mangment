@@ -29,7 +29,7 @@ Todo? Todo = _context.Todos?.Find(todoId);
         response.Data = _context.Comments?.Where(com => com.TodoId == todoId).ToList();
         return response;
     }
-    public Res<Comment> addNewTodo(int userId, CommentDto req)
+    public Res<Comment> addNewComment(int userId, CommentDto req)
     {
         Res<Comment> response = new();
         Todo? todo = _context.Todos?.FirstOrDefault(u => u.Id == req.TodoId);
