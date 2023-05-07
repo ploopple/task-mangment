@@ -45,4 +45,35 @@ public class CommentControllerTest
         Assert.NotNull(result.Err);
         Assert.Equal("Todo does not exist", result.Err);
     }
+    [Fact]
+    public void GetAllTodoComments_WithValidTodoId_ReturnResListOfComment()
+    {
+        // Arrange
+        List<Comment> data = new(){new Comment{Id = 1, UserId = 2,  Context = "running 100 meeters", TodoId = 1, UserName = "User2"}};
+        Res<List<Comment>> res = new() { Data =  data};
+        A.CallTo(() => _commentService.getAllTodoComments(2)).Returns(res);
+
+        // Act
+        var result = _commentService.getAllTodoComments(2);
+
+        // Assert
+        Assert.Null(result.Err);
+        Assert.NotNull(result.Data);
+        Assert.Equal(data, result.Data);
+    }
+    [Fact]
+    public void GetAllTodoComments_WithNotValidTodoId_ReturnResStringErr()
+    {
+        // Arrange
+        Res<List<Comment>> res = new() { Err =  "Todo does not exist"};
+        A.CallTo(() => _commentService.getAllTodoComments(99)).Returns(res);
+
+        // Act
+        var result = _commentService.getAllTodoComments(99);
+
+        // Assert
+        Assert.Null(result.Data);
+        Assert.NotNull(result.Err);
+        Assert.Equal("Todo does not exist", result.Err);
+    }
 }
