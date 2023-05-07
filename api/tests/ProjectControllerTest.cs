@@ -172,10 +172,8 @@ public class ProjectControllerTest
     public void GetAllUserProjects_WithUserId_ReturnResListOfProjects()
     {
         // Arrange
-        // Res<List<Project>> res = new() { Data = ] } ;
-        // Res<List<Project>> res = new Res<List<Project>>(){ Data = new List<Project>{new Project()}} as Res<List<Project>>;
-        var d =(List<Project>) new List<Project>() {new Project {Id = 1, Name = "proj 1"}, new Project {Id= 2,Name = "proj 2"}};
-        Res<List<Project>> res = new () {Data = d};
+        var data =(List<Project>) new List<Project>() {new Project {Id = 1, Name = "proj 1"}, new Project {Id= 2,Name = "proj 2"}};
+        Res<List<Project>> res = new () {Data = data};
         A.CallTo(() => _projectService.getAllUserProjects(1)).Returns(res);
 
         // Act
@@ -184,6 +182,21 @@ public class ProjectControllerTest
         // Assert
         Assert.Null(result.Err);
         Assert.NotNull(result.Data);
-        Assert.Equal(d, result.Data);
+        Assert.Equal(data, result.Data);
+    }
+    [Fact]
+    public void GetAllUserProjects_WithNotUserId_ReturnResStringErr()
+    {
+        // Arrange
+        Res<List<Project>> res = new () { Err = "User does not exist"};
+        A.CallTo(() => _projectService.getAllUserProjects(99)).Returns(res);
+
+        // Act
+        var result = _projectService.getAllUserProjects(99);
+
+        // Assert
+        Assert.Null(result.Data);
+        Assert.NotNull(result.Err);
+        Assert.Equal("User does not exist", result.Err);
     }
 }
