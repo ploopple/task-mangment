@@ -1,4 +1,4 @@
-using src.Models.UserModel;
+using src.Models.TodoModel;
 using src.Services.ProjectServices;
 using FakeItEasy;
 using src.Models.ResModel;
@@ -198,5 +198,51 @@ public class ProjectControllerTest
         Assert.Null(result.Data);
         Assert.NotNull(result.Err);
         Assert.Equal("User does not exist", result.Err);
+    }
+    [Fact]
+    public void GetAllProjectTodos_WithValidUserIdAndProjectId_ReturnResListOfTodos()
+    {
+        // Arrange
+        var data =(List<Todo>) new List<Todo>() {new Todo {Id = 1, Title = "clean"}, new Todo {Id= 2,Title = "run"}};
+        Res<List<Todo>> res = new () {Data = data};
+        A.CallTo(() => _projectService.getAllProjectsTodos(1, 1)).Returns(res);
+
+        // Act
+        var result = _projectService.getAllProjectsTodos(1,1);
+
+        // Assert
+        Assert.Null(result.Err);
+        Assert.NotNull(result.Data);
+        Assert.Equal(data, result.Data);
+    }
+    [Fact]
+    public void GetAllProjectTodos_WithNotValidUserId_ReturnResStringErr()
+    {
+        // Arrange
+        Res<List<Todo>> res = new () { Err = "User does not exist"};
+        A.CallTo(() => _projectService.getAllProjectsTodos(99,1)).Returns(res);
+
+        // Act
+        var result = _projectService.getAllProjectsTodos(99, 1);
+
+        // Assert
+        Assert.Null(result.Data);
+        Assert.NotNull(result.Err);
+        Assert.Equal("User does not exist", result.Err);
+    }
+    [Fact]
+    public void GetAllProjectTodos_WithNotValidProjectId_ReturnResStringErr()
+    {
+        // Arrange
+        Res<List<Todo>> res = new () { Err = "Project does not exist"};
+        A.CallTo(() => _projectService.getAllProjectsTodos(1, 99)).Returns(res);
+
+        // Act
+        var result = _projectService.getAllProjectsTodos(1, 99);
+
+        // Assert
+        Assert.Null(result.Data);
+        Assert.NotNull(result.Err);
+        Assert.Equal("Project does not exist", result.Err);
     }
 }
