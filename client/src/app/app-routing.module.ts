@@ -9,8 +9,9 @@ import { ProjectsPageComponent } from './pages/projects-page/projects-page.compo
 import { ProjectPageComponent } from './pages/project-page/project-page.component';
 
 const routes: Routes = [
-  { path: '', component: HomePageComponent},
-  { path: 'projects', component: ProjectsPageComponent, canActivate: [AuthGuard]},
+  // { path: '', component: HomePageComponent},
+  // { path: 'projects', component: ProjectsPageComponent, canActivate: [AuthGuard]},
+  { path: '', component: ProjectsPageComponent, canActivate: [AuthGuard]},
   { path: 'login', component: LoginPageComponent, canActivate: [AuthNotGuard]},
   { path: 'singup', component: SingupPageComponent, canActivate: [AuthNotGuard]},
   { path: 'project/:id', component: ProjectPageComponent, canActivate: [AuthGuard]},

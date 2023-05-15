@@ -9,9 +9,9 @@
         <li *ngIf="!isLoggedIn">
             <a routerLink="singup">Sing up</a>
         </li>
-        <li *ngIf="isLoggedIn">
+        <!-- <li *ngIf="isLoggedIn">
             <a routerLink="projects">Projects</a>
-        </li>
+        </li> -->
     </ul>
     <button class="mr-8" *ngIf="isLoggedIn"(click)="handleOnLogout()">Logout</button>
 
