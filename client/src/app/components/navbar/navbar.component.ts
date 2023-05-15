@@ -14,7 +14,6 @@ export class NavbarComponent  {
     this.authService.isLoggedIns().subscribe(res => this.isLoggedIn = res)
   }
   handleOnLogout() {
-    // this.isLoggedIn = !this.isLoggedIn 
     this.authGuard.logout()
   }
 

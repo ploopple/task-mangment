@@ -14,7 +14,7 @@ export class ProjectsPageComponent {
   projects: any[] = []
   newProjectName = ""
   localStorage = localStorage
-  updatedName=""
+  updatedName = ""
   isUpdateingProjectName = false
   selectedProjectId = ""
 
@@ -26,7 +26,6 @@ export class ProjectsPageComponent {
   }
 
   ngOnInit() {
-    //console.log(111)
     this.handleOnGetAllUserProjects()
   }
 
@@ -34,7 +33,6 @@ export class ProjectsPageComponent {
     this.isLoading = true
     this.projectsPageService.handleOnGetAllProjects(this.userData.id)
       .subscribe((res: any) => {
-        // //console.log(data)
         this.projects = res.data.$values
         this.isLoading = false
       }, err => {
@@ -47,7 +45,6 @@ export class ProjectsPageComponent {
       this.isAddNewProjectLoading = true
       this.projectsPageService.handleOnAddNewProject(this.userData.id, this.newProjectName).subscribe((data: any) => {
         this.projects.push(data.data)
-        //console.log(data.data)
         this.newProjectName = ""
         this.isAddNewProjectLoading = false
       }, err => {
@@ -62,10 +59,9 @@ export class ProjectsPageComponent {
   }
 
   handleOnClickDelete(projectId: string) {
-    console.log(projectId)
     this.isLoading = true
-        const i = this.projects.findIndex(p => p.id === projectId)
-        this.projects.splice(i ,1)
+    const i = this.projects.findIndex(p => p.id === projectId)
+    this.projects.splice(i, 1)
     this.projectsPageService.handleOnDeleteProject(projectId)
       .subscribe((res: any) => {
         this.isLoading = false
@@ -74,24 +70,24 @@ export class ProjectsPageComponent {
         this.isLoading = false
       })
   }
-handleOnClickUpdate() {
-  if(this.updatedName) {
+  handleOnClickUpdate() {
+    if (this.updatedName) {
 
-    this.isLoading = true
-        const i = this.projects.findIndex(p => p.id === this.selectedProjectId)
-        this.projects[i].name =  this.updatedName
-        // this.projects.splice(i ,1)
-    this.projectsPageService.handleOnUpdateProject(this.selectedProjectId, this.updatedName)
-      .subscribe((res: any) => {
-        this.isUpdateingProjectName = false
-        this.updatedName = ""
-        this.isLoading = false
-      }, (err: any) => {
-        this.store.setErrMsg(err.error.error)
-        this.isUpdateingProjectName = false
-        this.updatedName = ""
-        this.isLoading = false
-      })
-  }
+      this.isLoading = true
+      const i = this.projects.findIndex(p => p.id === this.selectedProjectId)
+      this.projects[i].name = this.updatedName
+      // this.projects.splice(i ,1)
+      this.projectsPageService.handleOnUpdateProject(this.selectedProjectId, this.updatedName)
+        .subscribe((res: any) => {
+          this.isUpdateingProjectName = false
+          this.updatedName = ""
+          this.isLoading = false
+        }, (err: any) => {
+          this.store.setErrMsg(err.error.error)
+          this.isUpdateingProjectName = false
+          this.updatedName = ""
+          this.isLoading = false
+        })
+    }
   }
 }

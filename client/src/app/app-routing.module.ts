@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { SingupPageComponent } from './pages/singup-page/singup-page.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
@@ -9,8 +8,6 @@ import { ProjectsPageComponent } from './pages/projects-page/projects-page.compo
 import { ProjectPageComponent } from './pages/project-page/project-page.component';
 
 const routes: Routes = [
-  // { path: '', component: HomePageComponent},
-  // { path: 'projects', component: ProjectsPageComponent, canActivate: [AuthGuard]},
   { path: '', component: ProjectsPageComponent, canActivate: [AuthGuard]},
   { path: 'login', component: LoginPageComponent, canActivate: [AuthNotGuard]},
   { path: 'singup', component: SingupPageComponent, canActivate: [AuthNotGuard]},
