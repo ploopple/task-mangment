@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { GlobalVariblesService } from 'src/app/store/global-varibles.service';
-import { ProjectsPageService } from './projects-page.service';
+import { HomePageService } from './home-page.service';
 
 @Component({
-  selector: 'app-projects',
-  templateUrl: './projects-page.component.html',
+  selector: 'app-home',
+  templateUrl: './home-page.component.html',
 })
-export class ProjectsPageComponent {
+export class HomePageComponent {
 
   isLoading = false
   isAddNewProjectLoading = false
@@ -19,7 +19,7 @@ export class ProjectsPageComponent {
   selectedProjectId = ""
 
   errMsg = ""
-  constructor(private projectsPageService: ProjectsPageService, private store: GlobalVariblesService) {
+  constructor(private homePageService: HomePageService, private store: GlobalVariblesService) {
     this.store.getErrMsg().subscribe((value) => {
       this.errMsg = value
     })
@@ -31,7 +31,7 @@ export class ProjectsPageComponent {
 
   handleOnGetAllUserProjects() {
     this.isLoading = true
-    this.projectsPageService.handleOnGetAllProjects(this.userData.id)
+    this.homePageService.handleOnGetAllProjects()
       .subscribe((res: any) => {
         this.projects = res.data.$values
         this.isLoading = false
@@ -43,7 +43,7 @@ export class ProjectsPageComponent {
   handleOnAddProject() {
     if (this.newProjectName) {
       this.isAddNewProjectLoading = true
-      this.projectsPageService.handleOnAddNewProject(this.userData.id, this.newProjectName).subscribe((data: any) => {
+      this.homePageService.handleOnAddNewProject(this.newProjectName).subscribe((data: any) => {
         this.projects.push(data.data)
         this.newProjectName = ""
         this.isAddNewProjectLoading = false
@@ -62,7 +62,7 @@ export class ProjectsPageComponent {
     this.isLoading = true
     const i = this.projects.findIndex(p => p.id === projectId)
     this.projects.splice(i, 1)
-    this.projectsPageService.handleOnDeleteProject(projectId)
+    this.homePageService.handleOnDeleteProject(projectId)
       .subscribe((res: any) => {
         this.isLoading = false
       }, (err: any) => {
@@ -77,7 +77,7 @@ export class ProjectsPageComponent {
       const i = this.projects.findIndex(p => p.id === this.selectedProjectId)
       this.projects[i].name = this.updatedName
       // this.projects.splice(i ,1)
-      this.projectsPageService.handleOnUpdateProject(this.selectedProjectId, this.updatedName)
+      this.homePageService.handleOnUpdateProject(this.selectedProjectId, this.updatedName)
         .subscribe((res: any) => {
           this.isUpdateingProjectName = false
           this.updatedName = ""

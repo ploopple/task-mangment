@@ -11,10 +11,10 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ProjectPageComponent } from './pages/project-page/project-page.component';
-import { ProjectsPageComponent } from './pages/projects-page/projects-page.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AlertBoxComponent } from './components/alert-box/alert-box.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -24,10 +24,10 @@ import { LoadingComponent } from './components/loading/loading.component';
     NotFoundPageComponent,
     NavbarComponent,
     FooterComponent,
-    ProjectsPageComponent,
     ProjectPageComponent,
     AlertBoxComponent,
-    LoadingComponent
+    LoadingComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,

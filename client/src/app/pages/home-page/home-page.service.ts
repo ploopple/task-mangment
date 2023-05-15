@@ -5,17 +5,17 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class ProjectsPageService {
+export class HomePageService {
   headers = new HttpHeaders().set('Authorization', `Bearer ${this.cookieService.get("token")}`)
   userData: any
   constructor(private http: HttpClient, private cookieService: CookieService) { 
     this.userData = JSON.parse(localStorage.getItem("user")+"")
   }
 
-  handleOnGetAllProjects(userId: string) {
+  handleOnGetAllProjects() {
     return this.http.get('http://localhost:5242/api/Project/getAllUserProjects', {headers:this.headers})
   }
-  handleOnAddNewProject(userId: string,name: string) {
+  handleOnAddNewProject(name: string) {
     return this.http.post('http://localhost:5242/api/Project', {name}, {headers:this.headers, responseType: "json"})
   }
   handleOnDeleteProject(projectId: string) {
